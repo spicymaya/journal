@@ -1,9 +1,14 @@
 / ruby for loop. the block runs 1 for each item in posts and calls each one post
+/ = @posts.inspect
 - @posts.each do |post| 
 	.post
-		h1= post.title 
-		/truncate
-		p=post.body.slice!(0, 20) 
+		/{} replace the var name with its value
+		a(href="/posts/#{post.id}") 
+			h1= post.title 
+			/truncate
+		p=post.body.slice!(0, 20)
+	
+	
 
 
 
