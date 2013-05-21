@@ -1,5 +1,8 @@
-form.form-horizontal method='POST' action="/posts/"
+h1#new New Post
+h1#edit Edit Post
+/ ?: = if else
+form.form-horizontal method='POST' action="#{@post.id ? '/posts/' + @post.id.to_s : '/posts'}"
 	.control-group: input id="title" type="text" name="title" placeholder="title" value=@post.title
 	.control-group: input id="date"placeholder="date" type="text" name="date" maxlength="20" size="30" class="datepicker" data-date="12-02-12" data-date-format="yyyy-mm-dd" value=@post.date
-	.control-group: textarea#body placeholder="body" name="body" maxlength="10000" size="30" =@post.body
-	.control-group: button.btn.btn-danger type="submit" save
+	.control-group: textarea#body placeholder="body" name="body" maxlength="100000" size="230" =@post.body
+	.control-group: button.btn.btn-danger type="submit" #{@post.id ? 'update' : 'save'}

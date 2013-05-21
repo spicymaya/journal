@@ -76,14 +76,6 @@ li {
 	float: left;
 	@include clearfix;
 }
-.home, .edit {
-	ul.menu li {
-		float: left;
-		a {
-			margin-right: 30px;
-		}
-	}
-}
 .home {
 	.wrapper {
 		padding-bottom: 100px;
@@ -98,7 +90,14 @@ li {
 				float: right;
 			}
 		}
+		ul.menu li {
+			float: left;
+			a {
+				margin-right: 30px;
+			}
+		}
 	}
+	
 	ul.menu {
 	position: absolute;
 	top: 400px;
@@ -119,6 +118,17 @@ li {
 		}
 	}
 }
+.edit {
+	h1#new {
+		display: none;
+	}
+}
+.new {
+	h1#edit {
+		display: none;
+
+	}
+}
 button.btn-small {
 	&.btn.btn-danger, &.btn.btn-success {
 	float: right;
@@ -126,6 +136,16 @@ button.btn-small {
 	margin-right: 10px;
 	}
 }
+.control-group {
+	#title {
+		height: 30px;
+		border: none;
+	}
+	textarea#body {
+		width: 600px;
+		height: 300px;
+	}
+}	
 
 
 

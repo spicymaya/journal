@@ -1,6 +1,6 @@
-/.post#post_#{post_id}
-/print out a different id with post number on each page
-/=@post.inspect  /good way to figure out what values are
-small= @post.date
-h1= @post.title
-p= @post.body
+.post(id="post_#{@post.id}")
+	/print out a different id with post number on each page
+	/=@post.inspect  /good way to figure out what values are
+	small= @post.date
+	h1= @post.title
+	p= @post.body

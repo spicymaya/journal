@@ -42,6 +42,7 @@ end
 get '/posts/new' do
 	protected!
 	@post=Post.new
+	@body_class="new"
 	slim(:form)
 end
 get '/posts/:id/edit' do
@@ -50,6 +51,22 @@ get '/posts/:id/edit' do
 	@body_class="edit"
 	slim(:form)
 end
+delete '/posts/:id/edit' do
+	post=Post.get(params[:id])
+	post.destroy
+	redirect to ('/posts')
+end
+# patch didn't work cuz ruby is crazzzy or I didn't set it to patch in my form
+post '/posts/:id' do
+	post=Post.get(params[:id])
+	# post.attributes=params
+	# post.id=params[:id]
+	post.title=params[:title]
+	post.date=params[:date]
+	post.body=params[:body]
+	post.save
+	redirect to ("/posts/#{post.id}")
+end	
 
 post '/posts' do
 	# params.inspect #params- object which is a hash
@@ -72,12 +89,6 @@ helpers do
 	        response['WWW-Authenticate'] = %(Basic realm='Administration')
 	        throw(:halt, [401, "Not authorized\n"])
 	      end
-	    # end
+	    end
 	  end
 end	
-
-delete '/posts/:id' do
-	Post.get(params[:id]).destroy
-	redirect to ('/posts')
-end
-end
