@@ -129,23 +129,44 @@ li {
 
 	}
 }
-button.btn-small {
-	&.btn.btn-danger, &.btn.btn-success {
-	float: right;
-	font-size: 20px;
-	margin-right: 10px;
-	}
-}
 .control-group {
 	#title {
 		height: 30px;
-		border: none;
+		border: 1px solid #CCCCCC;
 	}
 	textarea#body {
 		width: 600px;
 		height: 300px;
 	}
+	button.btn.btn-danger {
+		font-size: 20px;
+	}
+	&:last-child {
+		float: left;
+		padding-right: 10px;
+	}	
 }	
+input.btn.btn-danger {
+	font-size: 20px;
+} 
+.upload {
+	button.btn {
+
+	}
+	input.input-medium.search-query {
+		width: 320px;
+		height: 40px;
+	}
+}
+.pics {
+	.upload_form {
+		@include clearfix;
+		form {
+			float: right;
+		}
+	}	
+}	
+
 
 
 

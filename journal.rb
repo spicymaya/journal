@@ -28,14 +28,13 @@ get '/' do
 	@body_class = "home"
  	slim(:index)
 end
-get '/about' do
-	slim(:about)
-end
-get '/pics' do
-	slim(:pics)
-end	
+# get '/about' do
+# 	slim(:about)
+# end
+
 get '/posts' do
 	@posts = Post.all
+
 	slim(:posts)
 end
 
@@ -51,7 +50,7 @@ get '/posts/:id/edit' do
 	@body_class="edit"
 	slim(:form)
 end
-delete '/posts/:id/edit' do
+delete '/posts/:id' do
 	post=Post.get(params[:id])
 	post.destroy
 	redirect to ('/posts')
@@ -60,7 +59,7 @@ end
 post '/posts/:id' do
 	post=Post.get(params[:id])
 	# post.attributes=params
-	# post.id=params[:id]
+	# puts params.inspect
 	post.title=params[:title]
 	post.date=params[:date]
 	post.body=params[:body]
@@ -80,6 +79,32 @@ get '/posts/:id' do # : because var in the route
 	@post = Post.get(params[:id]) #starts with a ":" because it's a symbol type of var, to_i converts a string to an integer
 	slim(:detail)
 end
+post '/pics/upload' do 
+	# puts "//////////////"
+	# puts params['myfile'][:tempfile]
+	path=File.dirname(__FILE__) + '/public/uploads/' + params['myfile'][:filename]
+	# puts "///////"
+	# puts path
+  File.open(path, "w") do |upload|
+  	upload.write(params['myfile'][:tempfile].read)
+  end	
+  redirect to ('/pics')
+end
+# class String
+# 	def initial
+#     self[0,1]
+#   end
+# end
+
+get '/pics' do
+	@entries = Dir.entries(File.dirname(__FILE__) + '/public/uploads/')
+	puts "////////////"
+	puts @entries
+	# puts @entries[0]
+	@pictures=@entries.select {|str| str[0]!="."}
+	slim(:pics)
+end	
+
 helpers do
 	def protected!
 		#password applies on the internet, but not on the computer (ENV-environment)
@@ -90,5 +115,5 @@ helpers do
 	        throw(:halt, [401, "Not authorized\n"])
 	      end
 	    end
-	  end
-end	
+	 end
+end

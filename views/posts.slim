@@ -6,7 +6,8 @@
 		a(href="/posts/#{post.id}") 
 			h1= post.title 
 			/truncate
-		p=post.body.slice!(0, 20)
+		/ p=post.body.slice!(0, 20)
+		=post.body.inspect
 	
 	
 

@@ -12,7 +12,8 @@ var dlp=document.location.pathname;
           post_id = $('.post').attr('id').replace('post_', '')
           // post_id=encodeURIComponent(post_id);
           var string_url = "/posts/" + post_id + "/edit";
-          window.location = string_url;
+          // redirect
+          window.location = string_url; 
       }   
 		} 
 		last_key_pressed=e.keyCode;	
@@ -20,5 +21,7 @@ var dlp=document.location.pathname;
 	$('.datepicker').on('changeDate', function() {
 		$('.datepicker').datepicker('hide'); 
 	})
+	// $(".cycle-slideshow").children('img').attr('src')
+
 	
 });
