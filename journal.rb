@@ -10,7 +10,7 @@ require 'rdiscount'
 configure do
 	Compass.add_project_configuration(File.join(Sinatra::Application.root, 'config', 'compass.rb'))
 end	
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://root:@127.0.0.1/journal') #find on the website
+DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_GREEN_URL'] || 'mysql://root:@127.0.0.1/journal') #find on the website
 class Post #model
 	include DataMapper::Resource
 	property(:id, Serial)
