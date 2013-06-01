@@ -4,3 +4,6 @@
 	small= @post.date
 	h1= @post.title
 	p= @post.body
+	-if @post.image
+		img src="/uploads/#{@post.image}"
+		

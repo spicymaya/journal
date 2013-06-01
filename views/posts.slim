@@ -1,5 +1,14 @@
 / ruby for loop. the block runs 1 for each item in posts and calls each one post
 / = @posts.inspect
+/ .upload_form
+	/ form(class="form-search" action="/pics/upload" method='post' enctype='multipart/form-data')
+	/ 	input type="file" name="myfile" class="input-medium search-query"
+	/ 	  / button.btn-mini choose file
+	/ 	button.btn.btn-danger  type="submit" class="btn" upload new
+	/.cycle-slideshow(data-cycle-fx="scrollHorz" data-cycle-timeout=0 data-cycle-pager="#adv-custom-pager" data-cycle-pager-template="<a href='#''><img src='{{src}}' width=20 height=20></a>")
+		/ -@pictures.each do |picture|
+		/ 	img(src="/uploads/#{picture}")
+	/ #adv-custom-pager.center.external
 - @posts.each do |post| 
 	.post
 		/{} replace the var name with its value
@@ -7,10 +16,5 @@
 			h1= post.title 
 			/truncate
 		/ p=post.body.slice!(0, 20)
-		=post.body.inspect
-	
-	
-
-
-
+		=post.body
 
