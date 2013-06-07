@@ -3,6 +3,7 @@
 	/=@post.inspect  /good way to figure out what values are
 	small= @post.date
 	h1= @post.title
+	/ ==markdown(@post.body).inspect
 	==markdown(@post.body)
 	-if @post.image
 		img src="/uploads/#{@post.image}"
