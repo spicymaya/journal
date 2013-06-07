@@ -11,6 +11,4 @@ form.destroy[action="/posts/#{@post.id}" method='POST']
 	/ I could have set form method to delete instead of post, but some browsers don't handle it correctly. this is how Rack gets around it
 	input[type='hidden' name='_method' value='delete']
 	input.btn.btn-danger[type='submit' value='delete']
-time
-	| 2011-01-28	
 
