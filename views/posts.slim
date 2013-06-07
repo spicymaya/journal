@@ -15,6 +15,6 @@
 		a(href="/posts/#{post.id}") 
 			h1= post.title 
 			/truncate
-		/ p=post.body.slice!(0, 20)
-		=post.body
+		/ p=post.body
+		==markdown(post.body).slice!(0, 500)
 

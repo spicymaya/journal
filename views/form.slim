@@ -6,9 +6,11 @@ form method='POST' action="#{@post.id ? '/posts/' + @post.id.to_s : '/posts'}" e
 	.control-group: input id="title" type="text" name="title" placeholder="title" value=@post.title
 	.control-group: input id="date"placeholder="date" type="text" name="date" maxlength="20" size="30" class="datepicker" data-date="12-02-12" data-date-format="yyyy-mm-dd" value=@post.date
 	.control-group: textarea#body placeholder="body" name="body" maxlength="100000" size="230" =@post.body
-	.control-group: button.btn.btn-danger type="submit" #{@post.id ? 'update' : 'save'}
+	.control-group: button.btn.btn-success type="submit" #{@post.id ? 'update' : 'save'}
 form.destroy[action="/posts/#{@post.id}" method='POST']
 	/ I could have set form method to delete instead of post, but some browsers don't handle it correctly. this is how Rack gets around it
 	input[type='hidden' name='_method' value='delete']
 	input.btn.btn-danger[type='submit' value='delete']
+time
+	| 2011-01-28	
 

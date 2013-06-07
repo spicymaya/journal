@@ -116,7 +116,9 @@ helpers do
 	      end
 	    end
 	 end
-	 def markdown(md) RDiscount.new(md, :smart).to_html end
+	 def markdown(md) 
+		RDiscount.new(md, :smart).to_html 
+	 end
 	 # file is a var that = to params[:image]
 	 def img_upload(file)
 	 	# puts "++++ #{file.inspect} ++++"

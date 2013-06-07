@@ -41,7 +41,7 @@
 .post {
 	@include clearfix;
 	a {
-	display: block;
+	// display: block;
 	}
 }	
 
@@ -139,7 +139,7 @@ form {
 			width: 600px;
 			height: 300px;
 		}
-		button.btn.btn-danger {
+		button.btn.btn-danger,button.btn.btn-success,  {
 			font-size: 20px;
 		}
 		&:last-child {
