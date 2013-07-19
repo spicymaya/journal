@@ -28,7 +28,7 @@ helpers do
 		#password applies on the internet, but not on the computer (ENV-environment)
 	    if ENV['RACK_ENV'] == 'production'
 	      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-	      unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ["adalovelace", "fland3rs"]
+	      unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [ENV['username'], ENV['password']]
 	        response['WWW-Authenticate'] = %(Basic realm='Administration')
 	        throw(:halt, [401, "Not authorized\n"])
 	      end
