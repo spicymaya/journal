@@ -22,6 +22,34 @@ end
 DataMapper.finalize #just need to do it
 DataMapper.auto_upgrade! #create and change the db automatically
 
+#helpers go at the beginning of the file
+helpers do
+	def protected!
+		#password applies on the internet, but not on the computer (ENV-environment)
+	    if ENV['RACK_ENV'] == 'production'
+	      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+	      unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ["adalovelace", "fland3rs"]
+	        response['WWW-Authenticate'] = %(Basic realm='Administration')
+	        throw(:halt, [401, "Not authorized\n"])
+	      end
+	    end
+	 end
+	 def markdown(md) 
+		RDiscount.new(md, :smart).to_html 
+	 end
+	 # file is a var that = to params[:image]
+	 def img_upload(file)
+	 	# puts "++++ #{file.inspect} ++++"
+	 	path=File.dirname(__FILE__) + '/public/uploads/' + file[:filename]
+	 	# puts "///////"
+	 	# puts path
+	  	File.open(path, "w") do |upload|
+	  		upload.write(file[:tempfile].read)
+	   end
+	   return file[:filename]
+	 end	
+end
+
 #doing the job of controllers; .slim files are views
 get '/style.css' do
  scss(:style)
@@ -53,19 +81,19 @@ get '/posts/new' do
 end
 get '/posts/:id/edit' do
 	protected!
-	@post = Post.get(params[:id])
+	@post = Post.get(params[:id].to_i)
 	@body_class="edit"
 	slim(:form)
 end
 delete '/posts/:id' do
-	post=Post.get(params[:id])
+	post=Post.get(params[:id].to_i)
 	post.destroy
 	redirect to ('/posts')
 end
 # patch didn't work cuz ruby is crazzzy or I didn't set it to patch in my form
 
 post '/posts/:id' do
-	post=Post.get(params[:id])
+	post=Post.get(params[:id].to_i)
 	# post.attributes=params
 	# puts params.inspect
 	if params[:image]
@@ -76,7 +104,7 @@ post '/posts/:id' do
 	post.date=params[:date]
 	post.body=params[:body]
 	post.save
-	redirect to ("/posts/#{post.id}")
+	redirect to("/posts/#{post.id}")
 end	
 
 post '/posts' do
@@ -88,11 +116,12 @@ post '/posts' do
 		post.image=img_file
 	end
 	post.save #writes post to the db
-	redirect to ('/posts')
+	redirect to('/posts')
 end
 get '/posts/:id' do # : because var in the route
 	#instant variable
-	@post = Post.get(params[:id]) #starts with a ":" because it's a symbol type of var, to_i converts a string to an integer
+	@post = Post.get(params[:id].to_i) #starts with a ":" because it's a symbol type of var, to_i converts a string to an integer
+	# @post.inspect
 	slim(:detail)
 end
 
@@ -104,30 +133,3 @@ end
 # 	@pictures=@entries.select {|str| str[0]!="."}
 # 	slim(:pics)
 # end	
-
-helpers do
-	def protected!
-		#password applies on the internet, but not on the computer (ENV-environment)
-	    if ENV['RACK_ENV'] == 'production'
-	      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-	      unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ["MAYA", "123"]
-	        response['WWW-Authenticate'] = %(Basic realm='Administration')
-	        throw(:halt, [401, "Not authorized\n"])
-	      end
-	    end
-	 end
-	 def markdown(md) 
-		RDiscount.new(md, :smart).to_html 
-	 end
-	 # file is a var that = to params[:image]
-	 def img_upload(file)
-	 	# puts "++++ #{file.inspect} ++++"
-	 	path=File.dirname(__FILE__) + '/public/uploads/' + file[:filename]
-	 	# puts "///////"
-	 	# puts path
-	  	File.open(path, "w") do |upload|
-	  		upload.write(file[:tempfile].read)
-	   end
-	   return file[:filename]
-	 end	
-end
